@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement; 
+using UnityEngine.SceneManagement;
 
 public class healthBar : MonoBehaviour
 {
@@ -15,23 +15,16 @@ public class healthBar : MonoBehaviour
         healthSlider.maxValue = maxHealth;
     }
 
-    void Update()
-    {
-        if (healthSlider.value != health)
-        {
-            healthSlider.value = health;
-        }
-    }
-
     public void TakeDamage(int amount)
     {
         health -= amount;
-        healthSlider.value = health; 
+        health = Mathf.Clamp(health, 0, maxHealth); // Ensure health doesn't go below 0
+        healthSlider.value = health;
 
         if (health <= 0)
         {
             Debug.Log("Player is dead!");
-            SceneManager.LoadScene("WinScene"); // load the win scene
+            SceneManager.LoadScene("loseScreen"); // Load the lose scene 
         }
     }
 }
